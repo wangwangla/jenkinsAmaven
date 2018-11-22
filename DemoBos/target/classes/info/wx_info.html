@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>维修系统联系方式</title>
+</head>
+<body>
+    <address>
+        tel:18392030223
+        <br/>
+        QQ:223222633
+        <br/>
+        微信:jianxiansiqi
+    </address>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>联系管理员</title>
+    </head>
+    <body>
+    <div>
+        私信管理员：<br/>
+        <textarea cols="60" id="msg" rows="10"></textarea>
+        <input type="button" value="发送" id="send" onclick="send()"/>
+
+        <br/>
+        你发送的消息是：
+        <br/>
+        <p type="text" id="show"></p>
+
+        <script>
+            var ws = null ;
+            var target="ws://localhost:8080/websocket/test";
+            if ('WebSocket' in window) {
+                ws = new WebSocket(target);
+            } else if ('MozWebSocket' in window) {
+                ws = new MozWebSocket(target);
+            } else {
+                alert('WebSocket is not supported by this browser.');
+            }
+
+            ws.onopen = function(obj){
+                console.info('open') ;
+                console.info(obj) ;
+            } ;
+
+            ws.onclose = function (obj) {
+                console.info('close') ;
+                console.info(obj) ;
+            } ;
+            ws.onmessage = function(obj){
+                console.info(obj) ;
+                document.getElementById('show').innerHTML=obj.data;
+            } ;
+            function send(){
+                ws.send(document.getElementById('msg').value);
+            }
+        </script>
+    </div>
+    </body>
+    </html>
+
+</body>
+</html>
